@@ -31,7 +31,7 @@ let x:[string, number];
 x = ['hello', 10];
 console.log(x[0].substring(1));
 
-x[3] = 'world';
+//x[3] = 'world';
 //console.log(x[5])
 //console.log(x[5].toString());
 

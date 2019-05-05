@@ -210,3 +210,80 @@ class AnalogClock implements ClockInterface1 {
 
 let digital = createClock(DigitalClock, 12, 17);
 let analog = createClock(AnalogClock, 3, 32);
+
+
+//继承接口
+interface Shape {
+    color: string
+}
+
+interface PenStroke {
+    penWidth: number;
+}
+
+//一个接口可以继承多个接口，创建出多个接口的合成接口。
+interface Square extends Shape, PenStroke {
+    sideLength: number;
+}
+
+let square = <Square>{};
+
+square.sideLength = 10;
+square.color = "blue";
+square.penWidth = 0.5;
+
+
+
+//混合类型
+interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void
+}
+
+//一个对象可以同时做为函数和对象使用，并带有额外的属性。
+function getCounter(): Counter {
+    let counter = <Counter>function (start:number) {};
+    counter.interval = 123;
+    counter.reset = function(){}
+    return counter;
+}
+
+
+let co = getCounter();
+co(10);
+co.reset();
+co.interval = 5.0;
+
+
+//接口继承类
+
+//当接口继承了一个类类型时，它会继承类的成员但不包括其实现。
+// 就好像接口声明了所有类中存在的成员，但并没有提供具体实现一样。
+// 接口同样会继承到类的private和protected成员。
+// 这意味着当你创建了一个接口继承了一个拥有私有或受保护的成员的类时，这个接口类型只能被这个类或其子类所实现（implement）。
+class Control {
+    private state: any;
+}
+
+interface SelectableControl extends Control {
+    select(): void;
+}
+
+class Button extends Control implements SelectableControl {
+    select() {}
+}
+
+class TextBox extends Control {
+    select() {}
+}
+
+//下面代码会报错
+/*class Image implements SelectableControl {
+    select() {}
+}*/
+
+
+class Location1{
+
+}
